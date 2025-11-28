@@ -5,7 +5,7 @@
 
 
 
-void banderole()
+/*void banderole()
 {
     printf("                                        ------------- \n");
     printf("                                       |  Multigame! |           \n");
@@ -71,9 +71,7 @@ void consignes(char nom_joueur[])
         }
 }
 
-
-int main() {
-    char nom_joueur[100];
+ char nom_joueur[100];
     banderole();
     nom_joueur_choisir(nom_joueur,100);
     presentation_des_jeux(nom_joueur);
@@ -96,19 +94,29 @@ int main() {
     else if (choix == 3)
     {
         
-    }
+    }*/
 
 
-   
-        
-
-return 0;}
-
-/*const char* listeMots[] = {
+int main() {
+    srand(time(NULL));
+   const char* listeMots[] = {
     "Éclipse","Ruisseau","Galaxie","Pivoine","Fragment","Brume","Cascade","Saphir","Horizon",
     "Mélodie","Nuance","Symbiose","Quartz","Fougère","Paradoxe","Éclat","Labyrinthe",
     "Vestige","Lueur","Rivage","Spirale","Envol","Mirage","Velours","Azur","Harmonie",
     "Mosaïque","Enigme","Silence","Luciole",
     };
 
-    char MotJoueurDevine[20];*/
+    
+    int nbMots = sizeof(listeMots) / sizeof(listeMots[0]); 
+    int index = rand() % nbMots;                             
+    const char* motSecret = listeMots[index];
+    printf("Mot choisi : %s\n", motSecret);
+
+    /*char MotJoueurDevine[20];*/
+
+   
+        
+
+return 0;}
+
+/**/
