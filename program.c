@@ -4,22 +4,36 @@
 #include <string.h>
 
 
-int main() {
-    char nom_joueur[100];
+
+void banderole()
+{
     printf("                                        ------------- \n");
     printf("                                       |  Multigame! |           \n");
     printf("                                        -------------\n");
+}
+
+void nom_joueur_choisir(char nom_joueur[], int max)
+{
+    
     printf("Bonjour cher joueur, et bienvenu dans Multigame, une plateforme"
         " qui rassemble les meilleurs jeux du MONDE entier!!!\n Ici on est la pour se détendre...\n\n"
         "Tout d'abord comment veux -tu etre appelé :\n ");
-        fgets(nom_joueur, 100, stdin);
-        nom_joueur[strlen(nom_joueur)-1]='\0';
-        printf("\n");
-        printf("%s, ca c'est bien un nom de winner! Tu sais un des plus grand joueur de Multigame a le meme nom que toi, coincidence je crois pas...\n\n", nom_joueur);
-        printf("Alors %s sur cette plateforme, tu peux choisir de jouer entre 3 jeux :\n"
-        "- Devine le nombre \n- Bataille (le jeux de carte) \n- Le pendu\n\n",nom_joueur);
+    fgets(nom_joueur, max, stdin);
+    nom_joueur[strlen(nom_joueur)-1]='\0';
+    printf("\n");
+    printf("%s, ca c'est bien un nom de winner! Tu sais un des plus grand joueur de Multigame a le meme nom que toi, coincidence je crois pas...\n\n", nom_joueur);
+}
 
-        printf("Est -ce que tu veux les consignes d'un jeu? Si oui choissiez un ou pluisieurs nombre entre :\n");
+void presentation_des_jeux( char nom_joueur[])
+{
+   
+    printf("Alors %s sur cette plateforme, tu peux choisir de jouer entre 3 jeux :\n"
+        "- Devine le nombre \n- Bataille (le jeux de carte) \n- Le pendu\n\n",nom_joueur);
+}
+
+void consignes(char nom_joueur[])
+{
+    printf("Est -ce que tu veux les consignes d'un jeu? Si oui choissiez un ou pluisieurs nombre entre :\n");
         int consignes_jeux;
             printf("1) Devine le nombre \n");
             printf("2) Bataille\n");
@@ -55,6 +69,38 @@ int main() {
         }
 
         }
+}
+
+
+int main() {
+    char nom_joueur[100];
+    banderole();
+    nom_joueur_choisir(nom_joueur,100);
+    presentation_des_jeux(nom_joueur);
+    consignes(nom_joueur);
+
+    int choix;
+    printf("Quel jeux veux-tu choisir? Entre 1, 2 et 3");
+    scanf("%d", choix);
+    
+    if (choix == 1)
+    {
+
+    }
+    
+    else if (choix == 2)
+    {
+
+    }
+
+    else if (choix == 3)
+    {
+        
+    }
+
+
+   
+        
 
 return 0;}
 
