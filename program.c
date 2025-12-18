@@ -112,6 +112,12 @@ void consignes(char nom_joueur[])
 
     }
 
+    void JeuPenduNiveau1 ()
+    {
+        printf("Puisque tu as choisi le niveau le plus facile, tu as 30 coups pour trouver le mot!\n");
+        
+    }
+
     int main() {
         srand(time(NULL));
     const char* listeMots[] = {
