@@ -97,26 +97,115 @@ void consignes(char nom_joueur[])
     }*/
 
 
-int main() {
-    srand(time(NULL));
-   const char* listeMots[] = {
-    "Éclipse","Ruisseau","Galaxie","Pivoine","Fragment","Brume","Cascade","Saphir","Horizon",
-    "Mélodie","Nuance","Symbiose","Quartz","Fougère","Paradoxe","Éclat","Labyrinthe",
-    "Vestige","Lueur","Rivage","Spirale","Envol","Mirage","Velours","Azur","Harmonie",
-    "Mosaïque","Enigme","Silence","Luciole",
-    };
 
-    
-    int nbMots = sizeof(listeMots) / sizeof(listeMots[0]); 
+
+
+
+
+    void MenuPendu()
+    { 
+        printf("Tu peux alors choisir entre plusieur niveux : \n 1) Niveau débutant\n 2) Niveau médium \n 3) Niveau expert\n ");
+        printf("Ecris 1, 2 ou 3 en fonction de ce que tu veux.");
+        int NiveauPendu;
+        scanf("%d",&NiveauPendu);
+        printf("Alors tu as choisi le niveau %d", NiveauPendu);
+
+    }
+
+    int main() {
+        srand(time(NULL));
+    const char* listeMots[] = {
+        "Éclipse","Ruisseau","Galaxie","Pivoine","Fragment","Brume","Cascade","Saphir","Horizon",
+        "Mélodie","Nuance","Symbiose","Quartz","Fougère","Paradoxe","Éclat","Labyrinthe",
+        "Vestige","Lueur","Rivage","Spirale","Envol","Mirage","Velours","Azur","Harmonie",
+        "Mosaïque","Enigme","Silence","Luciole","Turboréacteur", "Aérodynamique", "Cockpit", "Altitude", 
+        "Fuselage", "Turbulence","Avionique", "Hélicoptère","Volets", "Atterrissage", 
+        "Planeur", "Compas", "Navigation", "Commandant", "Empennage", "Piste","Portance", "Radar", "Maintenance", "Cap",
+        };
+
+        char nom_joueur;
+        printf("Te voici dans la partie du Pendu...\n");
+        printf("ici l'odinateur choisit son propore mot, et toi tu vas devoir le trouver!\n");
+        MenuPendu();
+    }
+       /* int NiveauPendu;
+        if (NiveauPendu ==1)
+        {
+            JeuPenduNiveau1();
+        }
+
+        else if (NiveauPendu == 2)
+        {
+            JeuPenduNiveau2();
+        }
+
+        else if (NiveauPendu == 3)
+        {
+            JeuPenduNiveau3();
+        }
+
+        printf("Tu as fini ta partie veux tu en refaire une ?\n");
+        printf("ecris 1 pour oui et 2 pour non \n");
+        int NouvellePartie;
+        scanf("%d",NouvellePartie);
+        if (NouvellePartie == 1)
+        {
+            MenuPendu();
+        }
+*/
+
+        
+
+
+
+
+
+
+
+
+
+    /*int nbMots = sizeof(listeMots) / sizeof(listeMots[0]); 
     int index = rand() % nbMots;                             
     const char* motSecret = listeMots[index];
-    printf("Mot choisi : %s\n", motSecret);
 
-    /*char MotJoueurDevine[20];*/
+    char lettresTestees[26];
+    int nbLettresTestees = 0;
+
+    const char*lettre;
+    scanf(" %c", &lettre);
+    printf("%c"&lettre);
+    int dejaTestee = 0;
+
+    for (int i = 0; i < nbLettresTestees; i++)
+    {
+        if (lettresTestees[i] == lettre)
+        {   
+            dejaTestee = 1;
+        }
+    }
+
+    if (dejaTestee)
+    {
+        printf("Fatch, la lettre a dejà été testée!\n");
+    }
+
+    
+
+    lettresTestees[nbLettresTestees] = lettre;
+    nbLettresTestees++;
+    int trouve = 0;
+
+    for (int i = 0; i < longueur; i++)
+    {
+        if (motSecret[i] == lettre)
+        {
+            motAffiche[i] = lettre;
+            trouve = 1;
+        }
+    }
 
    
         
 
 return 0;}
-
-/**/
+*/
