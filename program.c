@@ -95,31 +95,65 @@ void consignes(char nom_joueur[])
     {
         
     }*/
+int MenuPendu() {
+    printf("Tu peux alors choisir entre plusieurs niveaux :\n");
+    printf(" 1) Niveau débutant (20 coups)\n 2) Niveau médium (15 coups)\n 3) Niveau expert (10 coups)\n");
+    printf("Ecris 1, 2 ou 3 : ");
 
+    int NiveauPendu;
+    scanf("%d", &NiveauPendu);
+    printf("Alors tu as choisi le niveau %d\n", NiveauPendu);
+    return NiveauPendu;
+}
 
+void JeuPendu(const char* mot, int NombreDecoupsMax) {
+    int n = (int)strlen(mot);
 
+    char MotMasqué[50];
+    for (int i = 0; i < n; i++) MotMasqué[i] = '_';
+    MotMasqué[n] = '\0';
 
+    int NombreDeCoups = NombreDecoupsMax;
 
+    while (NombreDeCoups > 0 && strcmp(MotMasqué, mot) != 0) {
+        printf("\nMot : %s\n", MotMasqué);
+        printf("Coups restants : %d\n", NombreDeCoups);
 
+        printf("Lettre : ");
+        printf("ATTENTION LA LETTRE DOIT ETRE EN MINUSCULE");
+        char lettre;
+        scanf(" %c", &lettre);
 
-    void MenuPendu()
-    { 
-        printf("Tu peux alors choisir entre plusieur niveux : \n 1) Niveau débutant\n 2) Niveau médium \n 3) Niveau expert\n ");
-        printf("Ecris 1, 2 ou 3 en fonction de ce que tu veux.");
-        int NiveauPendu;
-        scanf("%d",&NiveauPendu);
-        printf("Alors tu as choisi le niveau %d", NiveauPendu);
+        int trouve = 0;
+        for (int i = 0; i < n; i++) {
+            if (mot[i] == lettre) {
+                MotMasqué[i] = mot[i];
+                trouve = 1;
+            }
+        }
 
+        if (!trouve) 
+        { 
+            NombreDeCoups = NombreDeCoups - 1;
+             printf("Raté !\n"); 
+        }
+        else { 
+            printf("Bien !\n"); }
     }
 
-    void JeuPenduNiveau1 ()
+    if (MotMasqué, mot == 0) 
     {
-        printf("Puisque tu as choisi le niveau le plus facile, tu as 30 coups pour trouver le mot!\n");
-        
+        printf("\nBravo ! Le mot était : %s\n", mot);
+    } 
+    else 
+    {
+        printf("\nPerdu... Le mot était : %s\n", mot);
     }
+}
 
-    int main() {
-        srand(time(NULL));
+int main() {
+    srand((unsigned)time(NULL));
+
     const char* listeMots[] = {
         "Éclipse","Ruisseau","Galaxie","Pivoine","Fragment","Brume","Cascade","Saphir","Horizon",
         "Mélodie","Nuance","Symbiose","Quartz","Fougère","Paradoxe","Éclat","Labyrinthe",
@@ -128,90 +162,19 @@ void consignes(char nom_joueur[])
         "Fuselage", "Turbulence","Avionique", "Hélicoptère","Volets", "Atterrissage", 
         "Planeur", "Compas", "Navigation", "Commandant", "Empennage", "Piste","Portance", "Radar", "Maintenance", "Cap",
         };
+    int nbMots = (int)(sizeof(listeMots) / sizeof(listeMots[0]));
+    const char* motSecret = listeMots[rand() % nbMots];
 
-        char nom_joueur;
-        printf("Te voici dans la partie du Pendu...\n");
-        printf("ici l'odinateur choisit son propore mot, et toi tu vas devoir le trouver!\n");
-        MenuPendu();
-    }
-       /* int NiveauPendu;
-        if (NiveauPendu ==1)
-        {
-            JeuPenduNiveau1();
-        }
+    printf("Te voici dans la partie du Pendu...\n");
+    printf("L'ordinateur choisit un mot, et toi tu vas devoir le trouver !\n");
 
-        else if (NiveauPendu == 2)
-        {
-            JeuPenduNiveau2();
-        }
+    int niveau = MenuPendu();
 
-        else if (NiveauPendu == 3)
-        {
-            JeuPenduNiveau3();
-        }
+    if (niveau == 1) JeuPendu(motSecret, 20);
+    else if (niveau == 2) JeuPendu(motSecret, 15);
+    else if (niveau == 3) JeuPendu(motSecret, 10);
+    else printf("Niveau invalide.\n");
 
-        printf("Tu as fini ta partie veux tu en refaire une ?\n");
-        printf("ecris 1 pour oui et 2 pour non \n");
-        int NouvellePartie;
-        scanf("%d",NouvellePartie);
-        if (NouvellePartie == 1)
-        {
-            MenuPendu();
-        }
-*/
-
-        
-
-
-
-
-
-
-
-
-
-    /*int nbMots = sizeof(listeMots) / sizeof(listeMots[0]); 
-    int index = rand() % nbMots;                             
-    const char* motSecret = listeMots[index];
-
-    char lettresTestees[26];
-    int nbLettresTestees = 0;
-
-    const char*lettre;
-    scanf(" %c", &lettre);
-    printf("%c"&lettre);
-    int dejaTestee = 0;
-
-    for (int i = 0; i < nbLettresTestees; i++)
-    {
-        if (lettresTestees[i] == lettre)
-        {   
-            dejaTestee = 1;
-        }
-    }
-
-    if (dejaTestee)
-    {
-        printf("Fatch, la lettre a dejà été testée!\n");
-    }
-
-    
-
-    lettresTestees[nbLettresTestees] = lettre;
-    nbLettresTestees++;
-    int trouve = 0;
-
-    for (int i = 0; i < longueur; i++)
-    {
-        if (motSecret[i] == lettre)
-        {
-            motAffiche[i] = lettre;
-            trouve = 1;
-        }
-    }
-
+    return 0;
+}
    
-        
-
-return 0;}
-*/
