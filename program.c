@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdio.h>
+#define NB_CARTES 26
 
 
 
@@ -21,7 +23,7 @@ void nom_joueur_choisir(char nom_joueur[], int max)
     fgets(nom_joueur, max, stdin);
     nom_joueur[strlen(nom_joueur)-1]='\0';
     printf("\n");
-    printf("%s, ca c'est bien un nom de winner! Tu sais un des plus grand joueur de Multigame a le meme nom que toi, coincidence je crois pas...\n\n", nom_joueur);
+    printf("%s, c'est bien un nom de winner! Tu sais un des plus grand joueur de Multigame a le meme nom que toi, coincidence je crois pas...\n\n", nom_joueur);
 }
 
 void presentation_des_jeux( char nom_joueur[])
@@ -71,30 +73,84 @@ void consignes(char nom_joueur[])
         }
 }
 
- char nom_joueur[100];
-    banderole();
-    nom_joueur_choisir(nom_joueur,100);
-    presentation_des_jeux(nom_joueur);
-    consignes(nom_joueur);
+void jouer_nombre_mystere(int max_valeur, int max_essais) 
+{
+    int nombre_mystere = (rand() % max_valeur) + 1;
+    int essai;
+    int essais = 0;
 
-    int choix;
-    printf("Quel jeux veux-tu choisir? Entre 1, 2 et 3");
-    scanf("%d", choix);
+    printf("Devine le nombre mystere choisi entre 1 et %d\n", max_valeur);
+
+    while (1) 
+    {
+        if (max_essais != -1 && essais >= max_essais) 
+        {
+            printf("Vous avez epuise vos %d essais. PERDU.\n", max_essais);
+            printf("Le nombre etait : %d\n", nombre_mystere);
+            break;
+        }
+
+        printf("Entre ton choix : ");
+        scanf("%d", &essai);
+        essais++;
+
+        if (essai < nombre_mystere) 
+        {
+            printf("C'est plus grand\n");
+        } 
+        else if (essai > nombre_mystere) 
+        {
+            printf("C'est plus petit\n");
+        } else 
+        {
+            printf("Bravo ! Tu as trouve en %d essais.\n", essais);
+            break;
+        }
+    }
+}
+
+void distribuerCartes(int joueur[]) {
+    int i;
+    for (i = 0; i < NB_CARTES; i++) {
+        joueur[i] = rand() % 13 + 2; // 2 à 14
+    }
+}
+
+int jouerPartie(int joueur[], int ordinateur[]) {
+    int i;
+    int scoreJ = 0, scoreO = 0;
+    char touche;
+
+    for (i = 0; i < NB_CARTES; i++) {
+        printf("\nTour %d\n", i + 1);
+        printf("Appuie sur Entrée pour jouer ta carte...");
+        getchar(); // attendre Entrée
+
+        printf("Ta carte : %d\n", joueur[i]);
+        printf("Carte ordinateur : %d\n", ordinateur[i]);
+
+        if (joueur[i] > ordinateur[i]) {
+            printf(">>> Tu gagnes ce tour !");
+            scoreJ++;
+        }
+        else if (ordinateur[i] > joueur[i]) {
+            printf(">>> L'ordinateur gagne ce tour !");
+            scoreO++;
+        }
+        else {
+            printf(">>> Egalite !");
+        }
+        printf("\n");
+    }
+
+    printf("\nScore final : Toi = %d | Ordinateur = %d\n", scoreJ, scoreO);
+
+    if (scoreJ > scoreO) return 1;
+    else if (scoreO > scoreJ) return 2;
+    else return 0;
+}
     
-    if (choix == 1)
-    {
-
-    }
     
-    else if (choix == 2)
-    {
-
-    }
-
-    else if (choix == 3)
-    {
-        
-    }
 int MenuPendu() {
     printf("Tu peux alors choisir entre plusieurs niveaux :\n");
     printf(" 1) Niveau débutant (20 coups)\n 2) Niveau médium (15 coups)\n 3) Niveau expert (10 coups)\n");
@@ -105,8 +161,15 @@ int MenuPendu() {
     printf("Alors tu as choisi le niveau %d\n", NiveauPendu);
     return NiveauPendu;
 }
+int dejaTestee(const char lettresTestees[], int nb, char lettre)
+{
+    for (int i = 0; i < nb; i++) {
+        if (lettresTestees[i] == lettre) return 1;
+    }
+}
 
-void JeuPendu(const char* mot, int NombreDecoupsMax) {
+void JeuPendu(const char* mot, int NombreDecoupsMax) 
+{
     int n = (int)strlen(mot);
 
     char MotMasqué[50];
@@ -114,19 +177,28 @@ void JeuPendu(const char* mot, int NombreDecoupsMax) {
     MotMasqué[n] = '\0';
 
     int NombreDeCoups = NombreDecoupsMax;
+    char lettresTestees[26];
+    int nbLettresTestees = 0;
 
-    while (NombreDeCoups > 0 && strcmp(MotMasqué, mot) != 0) {
+    while (NombreDeCoups > 0 && strcmp(MotMasqué, mot) != 0) 
+    {
         printf("\nMot : %s\n", MotMasqué);
         printf("Coups restants : %d\n", NombreDeCoups);
 
+        printf("Lettres deja testees : ");
+        for (int i = 0; i < nbLettresTestees; i++) printf("%c ", lettresTestees[i]);
+        printf("\n");
+
         printf("Lettre : ");
-        printf("ATTENTION LA LETTRE DOIT ETRE EN MINUSCULE");
+        printf("ATTENTION LA LETTRE DOIT ETRE EN MINUSCULE\n");
         char lettre;
         scanf(" %c", &lettre);
 
         int trouve = 0;
-        for (int i = 0; i < n; i++) {
-            if (mot[i] == lettre) {
+        for (int i = 0; i < n; i++) 
+        {
+            if (mot[i] == lettre) 
+            {
                 MotMasqué[i] = mot[i];
                 trouve = 1;
             }
@@ -137,11 +209,13 @@ void JeuPendu(const char* mot, int NombreDecoupsMax) {
             NombreDeCoups = NombreDeCoups - 1;
              printf("Raté !\n"); 
         }
-        else { 
-            printf("Bien !\n"); }
+        else 
+        { 
+            printf("Bien !\n"); 
+        }
     }
 
-    if (strcmp(MotMasqué, mot) == 0)) 
+    if (strcmp(MotMasqué, mot) == 0)
     {
         printf("\nBravo ! Le mot était : %s\n", mot);
     } 
@@ -151,29 +225,157 @@ void JeuPendu(const char* mot, int NombreDecoupsMax) {
     }
 }
 
-int main(void) {
+int main(void) 
+{
     srand((unsigned)time(NULL));
+    char nom_joueur[100];
+    banderole();
+    nom_joueur_choisir(nom_joueur,100);
+    presentation_des_jeux(nom_joueur);
+    consignes(nom_joueur);
 
-    const char* listeMots[] = {
-        "Éclipse","Ruisseau","Galaxie","Pivoine","Fragment","Brume","Cascade","Saphir","Horizon",
-        "Mélodie","Nuance","Symbiose","Quartz","Fougère","Paradoxe","Éclat","Labyrinthe",
-        "Vestige","Lueur","Rivage","Spirale","Envol","Mirage","Velours","Azur","Harmonie",
-        "Mosaïque","Enigme","Silence","Luciole","Turboréacteur", "Aérodynamique", "Cockpit", "Altitude", 
-        "Fuselage", "Turbulence","Avionique", "Hélicoptère","Volets", "Atterrissage", 
-        "Planeur", "Compas", "Navigation", "Commandant", "Empennage", "Piste","Portance", "Radar", "Maintenance", "Cap",
-        };
-    int nbMots = (int)(sizeof(listeMots) / sizeof(listeMots[0]));
-    const char* motSecret = listeMots[rand() % nbMots];
+    int choix;
+    printf("Quel jeux veux-tu choisir? Entre 1, 2 et 3\n");
+    scanf("%d",&choix);
 
-    printf("Te voici dans la partie du Pendu...\n");
-    printf("L'ordinateur choisit un mot, et toi tu vas devoir le trouver !\n");
+    if (choix == 1)
+    {
+        int continuer = 1;
+        while (continuer == 1) 
+        {  
+        printf("=== DEVINE LE NOMBRE ===\n");
+        int niveau;
+        int max_essais;
+        int max_valeur = 100;
 
-    int niveau = MenuPendu();
+        printf("Choisis ton niveau (1, 2, 3) : ");
+        scanf("%d", &niveau);
 
-    if (niveau == 1) JeuPendu(motSecret, 20);
-    else if (niveau == 2) JeuPendu(motSecret, 15);
-    else if (niveau == 3) JeuPendu(motSecret, 10);
-    else printf("Niveau invalide.\n");
+        if (niveau == 1) {
+            max_essais = -1;   // illimité
+        } else if (niveau == 2) {
+            max_essais = 50;
+        } else if (niveau == 3) {
+            max_essais = 10;
+        } else {
+            printf("Niveau invalide. Tu repars au niveau 1.\n");
+            max_essais = -1;
+        }
+
+        jouer_nombre_mystere(max_valeur, max_essais);
+        printf("On espere que tu t'es bien amusé! Mais il faut faire un choix. Soit tu continues de jouer, soit tu arretes et reviens au menu principal.\n");
+            printf("Tu as le chois entre :\n 1)Je continue de jouer a devine le nombre \n 2) J'arrete de jouer\n");
+            int ChoixApresDevineLeNombre;
+            scanf("%d",&ChoixApresDevineLeNombre);
+            printf("Tu as choisi de faire le numéro : %d \n\n", ChoixApresDevineLeNombre);
+
+            if (ChoixApresDevineLeNombre == 1) 
+            {
+            continuer = 1;
+            } 
+            else 
+            {
+            continuer = 0;
+            }
+        
+        }
+    }
+
+    else if (choix == 2)
+    {
+        int continuer = 1;
+        while (continuer == 1) 
+        {
+            int joueur[NB_CARTES];
+            int ordinateur[NB_CARTES];
+            int resultat;
+
+            srand(time(NULL));
+
+            printf("=== JEU DE LA BATAILLE ===\n");
+            printf("Toi contre l'ordinateur\n\n");
+
+            distribuerCartes(joueur);
+            distribuerCartes(ordinateur);
+
+            resultat = jouerPartie(joueur, ordinateur);
+
+            if (resultat == 1)
+            {
+                printf(">>> Bravo ! Tu gagnes la partie !\n");
+            }
+            else if (resultat == 2)
+            {
+                printf(">>> L'ordinateur gagne la partie.\n");
+            }
+            else
+            {
+                printf(">>> Match nul.\n");
+            }
+
+            printf("Alors cette bataille? il faut faire un choix. Soit tu continues de jouer, soit tu arretes et reviens au menu principal.");
+            printf("Tu as le chois entre :\n 1)Je continue de jouer au pendu \n 2) J'arrete de jouer\n");
+            int ChoixApresBataille;
+            scanf("%d",&ChoixApresBataille);
+            printf("Tu as choisi de faire le numéro : %d \n\n", ChoixApresBataille);
+
+            if (ChoixApresBataille == 1) 
+            {
+            continuer = 1;
+            } 
+            else 
+            {
+            continuer = 0;
+            }
+
+        } 
+    }
+
+    else if (choix == 3)
+    {
+        int continuer = 1;
+        while (continuer == 1) 
+        {
+            printf("=== JEU DU PENDU ===\n");
+            const char* listeMots[] = 
+            {
+            "Éclipse","Ruisseau","Galaxie","Pivoine","Fragment","Brume","Cascade","Saphir","Horizon",
+            "Mélodie","Nuance","Symbiose","Quartz","Fougère","Paradoxe","Éclat","Labyrinthe",
+            "Vestige","Lueur","Rivage","Spirale","Envol","Mirage","Velours","Azur","Harmonie",
+            "Mosaïque","Enigme","Silence","Luciole","Turboréacteur", "Aérodynamique", "Cockpit", "Altitude", 
+            "Fuselage", "Turbulence","Avionique", "Hélicoptère","Volets", "Atterrissage", 
+            "Planeur", "Compas", "Navigation", "Commandant", "Empennage", "Piste","Portance", "Radar", "Maintenance", "Cap",
+            };
+
+            int nbMots = (int)(sizeof(listeMots) / sizeof(listeMots[0]));
+            const char* motSecret = listeMots[rand() % nbMots];
+
+            printf("Te voici dans la partie du Pendu...\n");
+            printf("L'ordinateur choisit un mot, et toi tu vas devoir le trouver !\n");
+
+            int niveau = MenuPendu();
+
+            if (niveau == 1) JeuPendu(motSecret, 20);
+            else if (niveau == 2) JeuPendu(motSecret, 15);
+            else if (niveau == 3) JeuPendu(motSecret, 10);
+            else printf("Niveau invalide.\n");
+        
+            printf("Maintenant que tu t'es bien amusé avec le pendu il faut faire un choix. Soit tu continues de jouer, soit tu arretes et reviens au menu principal.");
+            printf("Tu as le chois entre :\n 1)Je continue de jouer au pendu \n 2) J'arrete de jouer\n");
+            int ChoixApresPendu;
+            scanf("%d",&ChoixApresPendu);
+            printf("Tu as choisi de faire le numéro : %d \n\n", ChoixApresPendu);
+
+            if (ChoixApresPendu == 1) 
+            {
+            continuer = 1;
+            } 
+            else 
+            {
+            continuer = 0;
+            }
+        }
+    }
 
     return 0;
 }
