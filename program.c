@@ -5,7 +5,7 @@
 
 
 
-/*void banderole()
+void banderole()
 {
     printf("                                        ------------- \n");
     printf("                                       |  Multigame! |           \n");
@@ -94,7 +94,7 @@ void consignes(char nom_joueur[])
     else if (choix == 3)
     {
         
-    }*/
+    }
 int MenuPendu() {
     printf("Tu peux alors choisir entre plusieurs niveaux :\n");
     printf(" 1) Niveau débutant (20 coups)\n 2) Niveau médium (15 coups)\n 3) Niveau expert (10 coups)\n");
@@ -141,7 +141,7 @@ void JeuPendu(const char* mot, int NombreDecoupsMax) {
             printf("Bien !\n"); }
     }
 
-    if (MotMasqué, mot == 0) 
+    if (strcmp(MotMasqué, mot) == 0)) 
     {
         printf("\nBravo ! Le mot était : %s\n", mot);
     } 
@@ -151,7 +151,7 @@ void JeuPendu(const char* mot, int NombreDecoupsMax) {
     }
 }
 
-int main() {
+int main(void) {
     srand((unsigned)time(NULL));
 
     const char* listeMots[] = {
